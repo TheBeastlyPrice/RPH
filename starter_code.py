@@ -12,29 +12,44 @@ in this game"""
 class Player:
     my_move = None
     their_move = None
+
     def move(self):
+
         return random.choice(moves)
 
     def learn(self, my_move, their_move):
-        self.my_move = their_move
         self.my_move = their_move
         return
 
 
 def beats(one, two):
+
     return ((one == 'rock' and two == 'scissors') or
             (one == 'scissors' and two == 'paper') or
             (one == 'paper' and two == 'rock'))
 
 
 class RandomPlayer(Player):
+
     def move(self):
         return random.choice(moves)
 
 
+class RockMan(Player):
+
+    def move(self, my_move, thier_move):
+
+        return 'rock'
+
+
 class HumanPlayer(Player):
+
     def move(self):
         my_move = input("rock, paper or scissors?: \n")
+        while my_move not in ("rock", "paper", "scissors"):
+            print("That's not valid")
+            my_move = input("rock, paper or scissors?: \n")
+
         if my_move == "rock":
             return "rock"
         elif my_move == "paper":
@@ -45,16 +60,18 @@ class HumanPlayer(Player):
             print("Try Again")
 
 
-class ReflectPlayer():
-    def move(self):
-        if self.thier_move == None:
+class ReflectPlayer(Player):
+
+    def move(self, my_move, thier_move):
+        if self.thier_move is None:
             return random.choice(moves)
         else:
             return self.their_move
 
+
 class CyclePlayer(Player):
+
     def move(self):
-        my_move = random.choice(moves)
         if self.my_move is None:
             return random.choice(moves)
         elif self.my_move == "rock":
@@ -64,7 +81,9 @@ class CyclePlayer(Player):
         else:
             return "rock"
 
+
 class Game:
+
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
@@ -90,14 +109,16 @@ class Game:
         for round in range(3):
             print(f"Round {round}:")
             self.play_round()
-            print(f" Player 1 score: {self.p1.score}, Player 2 score: {self.p2.score}")
+            print
+            (f"Player 1 score:{self.p1.score}, Player 2 score:{self.p2.score}")
             if self.p1.score > self.p2.score:
                 print("You Win")
             elif self.p1.score < self.p2.score:
                 print("You Lose")
             else:
                 print("Tie")
-        print("The score is " + str(self.p1.score) + " To " + str(self.p2.score))
+        print
+        ("The score is " + str(self.p1.score) + " To " + str(self.p2.score))
 
 
 if __name__ == '__main__':
